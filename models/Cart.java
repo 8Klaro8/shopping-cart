@@ -1,85 +1,99 @@
 package models;
 
+import java.security.MessageDigest;
 import java.util.ArrayList;
 
 public class Cart {
-    ArrayList<Item> items = new ArrayList<>();
+    ArrayList<Item> items;
 
-    // Constr.
-    public Cart() {
+
+    // conts.
+    public Cart(){
         this.items = new ArrayList<Item>();
     }
 
     // Get
     public Item getItem(int index) {
-        try {
-            for (int i = 0; i < items.size(); i++) {
-                if (index == i) {
-                    return items.get(index);
-                }
-            }
-            // If user try to access and element that doesn't exists (when it would return
-            // null because there is no name)
-        } catch (NullPointerException e) {
-            System.out.println(e);
-        }
-        return null;
+        return new Item(items.get(index));
     }
 
     // Set
     public void setItem(int index, Item item) {
-        // Check if user typed bigger index number than the actual size of the array is
-        int sizeOfItems = items.size();
-        if (index >= sizeOfItems) {
-            throw new IndexOutOfBoundsException("There is no item that you could set at index: " + index);
-        }
-        // Copy item that was passed in
-        items.set(index, new Item(item));
-        System.out.println("Item: " + item.getName() + " set at index: " + index);
+        this.items.set(index, new Item(item));
     }
 
-    // add item
-    public void addItem(Item item) {
-        Item copyOfItem = new Item(item);
-        if (!items.contains(item)) {
-            this.items.add(item);
-            System.out.println("Item added....");
-        } else {
-            System.out.println("Can't add item: '" + item.getName() + "' because it has been already added.");
+    // Add Method I.------------>
+    // public boolean addItem(Item item){
+
+    // for (int i = 0; i < items.size(); i++) {
+    //     if (items.get(i).getName().equalsIgnoreCase(item.getName())) {
+    //         System.out.println("The item: " + item.getName() + " has been added already.");
+    //         return false;
+    //     }
+    // }
+    // this.items.add(new Item(item));
+    // return true;
+    // }
+
+    // Add Method II.------------>
+    public void addItem(Item item){
+        boolean alreadyContains = false;
+        if (items.size() < 1) {
+            items.add(item);
+            System.out.println("Item added: " + item.getName());
+            return;
+        }
+
+        if (!(alreadyContains)) {
+            for (int i = 0; i < items.size(); i++) {
+                if (!(items.get(i).equals(item))) {
+                    alreadyContains = false;
+                }
+                else{
+                    alreadyContains = true;
+                }
+        }
+        
+        if (!(alreadyContains)) {
+            items.add(item);
+            System.out.println("Item added: " + item.getName());
+        }
+        else{
+            System.out.println("Item: " + item.getName() + " can't be added because it has been already added.");
+        }
         }
     }
 
-    // remove item
-    public void removeItem(String name) {
-
-        boolean removedItem = false;
+    // Remove
+    public void removeItem(String name){
         for (int i = 0; i < items.size(); i++) {
             if (name.equalsIgnoreCase(items.get(i).getName())) {
                 items.remove(i);
-                System.out.println("The item: " + name + " has been removed.");
-                removedItem = true;
             }
-            else{
-                continue;
-            }
-
-        if (removedItem == false) {
-            System.out.println("There is no item with the name: " + name);
-        }
-
-
         }
     }
 
-    // Print all items
-    public void printAllItems() {
-        System.out.println("\nItems in your cart:\n-----------------------");
+    public String checkout(){
+        double[] measures = new double[3];
+
         for (int i = 0; i < items.size(); i++) {
-            System.out.println(items.get(i));
+            measures[0] += items.get(i).getPrice();
         }
-        System.out.println();
+        measures[1] = measures[0] * 0.13;
+        measures[2] = measures[0] + measures[1];
+
+        return  "\nsubtotal: " + measures[0] + "\n" +
+                "tax: " + measures[1] +  "\n" +
+                "total: " + measures[2] + "\n";
     }
 
+    public String toString(){
+        String temp = "";
+        for (int i = 0; i < items.size(); i++) {
+            temp += items.get(i).toString();
+        }
+        return temp;
+    }
 }
 
 /**

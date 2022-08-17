@@ -1,57 +1,31 @@
 import java.util.Scanner;
 
+import javax.swing.CellEditor;
+
 import models.Cart;
 import models.Item;
 import models.Store;
 
 public class Main {
     public static void main(String[] args) {
-        Item firstItem = new Item("Celery", 0.99);
-        Item secondItem = new Item("Spinach", 0.99);
-        Item thirdItem = new Item("Coriander", 1.29);
 
-        Scanner scan = new Scanner(System.in);
         Cart cart = new Cart();
 
-        cart.addItem(firstItem);
-        cart.addItem(secondItem);
-        cart.addItem(thirdItem);
-        cart.addItem(firstItem);
+        cart.addItem(new Item("Zeller", 4.4));
+        cart.addItem(new Item("Spinach", 0.99));
+        cart.addItem(new Item("Celery", 0.99));
+        cart.addItem(new Item("Celery", 0.99));
 
-        while (true) {
-            System.out.println("What would you like to do?\n\ta.) Add item" +
-                    "\n\tb.) Remove item" +
-                    "\n\tc.) Checkout");
+        Item celeryItem = new Item("efefe", 1);
+        Item copyCeleryItem = celeryItem;
 
-            String userChoice = scan.nextLine();
-            switch (userChoice) {
-                case "a":
-                // ADD ITEM
-                System.out.println("Which item do you want to add?");
-                String userChoiceAddItem = scan.nextLine();
-                
-                // TODO: Add item emthod
+        cart.addItem(celeryItem);
+        cart.addItem(celeryItem);
+        cart.addItem(copyCeleryItem);
 
-                    break;
-                case "b":
-                // REMOVE
-                    System.out.println("Type item's name to remove.");
-                    String itemToRemove = scan.nextLine();
-                    cart.removeItem(itemToRemove);
+        System.out.println(cart);
 
-                    // Print all item
-                    cart.printAllItems();
-
-                    break;
-                case "c":
-                // CHECKOUT
-
-                    break;
-
-                default:
-                    break;
-            }
-        }
+        
 
     }
 
