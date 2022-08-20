@@ -100,9 +100,10 @@ public class Cart {
         measures[1] = measures[0] * 0.13;
         measures[2] = measures[0] + measures[1];
 
-        return "\nsubtotal: " + measures[0] + "\n" +
-                "tax: " + measures[1] + "\n" +
-                "total: " + measures[2] + "\n";
+        return "\nsubtotal: " + measures[0] + "$\n" +
+                "tax: " + measures[1] + "$\n" +
+                "total: " + measures[2] + "$" +
+                 "\n----------------------\n";
     }
 
     // toString method (override)
@@ -115,8 +116,10 @@ public class Cart {
     }
 
     public void printAllItemName(){
+        System.out.println("\n---------------------\nRecipe:\n");
         for (int i = 0; i < items.size(); i++) {
-            System.out.println(items.get(i).getName());
+            System.out.print(items.get(i).getName() + ": ");
+            System.out.print(items.get(i).getPrice() + "$\n");
         }
     }
 }

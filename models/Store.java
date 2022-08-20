@@ -17,6 +17,9 @@ public class Store {
 
     // Get
     public Item getItem(int row, int col) {
+        if (this.items[row][col] == null) {
+            throw new NullPointerException("\n\nItem is null at:\n\tCol: " + col + "\n\tRow: " + row + "\n");
+        }
         return new Item(this.items[row][col]);
     }
 
